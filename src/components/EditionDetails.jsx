@@ -1,15 +1,19 @@
 const EditionDetails = ({ edition }) => {
-    let fields = ["title", "publishers", "publish_date", "works", "pages"];
 
-for (let i = 0; i < fields.length; i++) {
-    const field = fields[i];
-    if (edition[field]) {
-        console.log(edition[field]);
-    }
 
-    
+
+
+    let fields = ["title", "publishers", "publish_date", "pages",];
+    const foundFields = [];
+
+    for (let i = 0; i < fields.length; i++) {
+        const field = fields[i];
+        if (edition[field]) {
+            foundFields.push(edition[field]);
+        }
+
     }
-    return <p>testing</p>
+    return <ul>{ foundFields.map(field => <li>{field}</li>) }</ul>
 }
 
 export default EditionDetails

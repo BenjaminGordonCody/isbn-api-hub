@@ -22,7 +22,6 @@ function App() {
     };
   
   const handleFetchWork = async (key) => {
-    setWork(key)
     const response = await fetch(`https://openlibrary.org${key}.json`)
     const data = await response.json()
     setWork(data)
@@ -32,7 +31,7 @@ function App() {
     handleFetchISBN(input)
     event.preventDefault()
   }
-    return <div className="App">
+    return (<div className="App">
       <h1>hi</h1>
       <form onSubmit={handleSubmit}>
         <input type="text" value={input} onChange={handleInputChange}></input>
@@ -40,9 +39,9 @@ function App() {
       </form>
       <div>
         <EditionDetails edition={edition} />
-        <WorkDetails work={work}/>}
+        <WorkDetails work={work}/>
       </div>
-  </div>;
+  </div>);
 }
 
 export default App;

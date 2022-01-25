@@ -1,10 +1,10 @@
-const BookDetails = ({ book }) => {
+const EditionDetails = ({ edition }) => {
     let fields = ["title", "publishers", "publish_date", "works", "pages"];
 
 for (let i = 0; i < fields.length; i++) {
     const field = fields[i];
-    if (book[field]) {
-        console.log(book[field]);
+    if (edition[field]) {
+        console.log(edition[field]);
     }
 
     
@@ -12,4 +12,4 @@ for (let i = 0; i < fields.length; i++) {
     return <p>testing</p>
 }
 
-export default BookDetails
+export default EditionDetails

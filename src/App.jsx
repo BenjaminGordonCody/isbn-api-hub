@@ -1,26 +1,32 @@
 import { useState,  } from "react";
 import "./App.css";
 import EditionDetails from "./components/EditionDetails"
+import WorkDetails from "./components/WorkDetails"
 
 function App() {
-   const blankBook = {
-    description: {
-      value: "Please enter an ISBN"
-    }
-  }
-  const [book, setBook] = useState(blankBook);
 
+    const [input, setInput] = useState("");
+  const [edition, setEdition] = useState("");
+    const [work, setWork] = useState("");
 
-  const [input, setInput] = useState("");
   
   const handleFetchISBN = async (isbn) => {
     const response = await fetch(`https://openlibrary.org/isbn/${isbn}.json`)
     const data = await response.json()
-    setBook(data)
+    setEdition(data)
+    handleFetchWork(data.works[0].key) 
+    
   }
     const handleInputChange = (event) => {
     setInput(event.target.value);
-  };
+    };
+  
+  const handleFetchWork = async (key) => {
+    setWork(key)
+    const response = await fetch(`https://openlibrary.org${key}.json`)
+    const data = await response.json()
+    setWork(data)
+  }
 
   const handleSubmit = (event) => {
     handleFetchISBN(input)
@@ -33,7 +39,8 @@ function App() {
         <input id="submitButton" type="submit" value="+" />
       </form>
       <div>
-        <EditionDetails book={book}/>
+        <EditionDetails edition={edition} />
+        <WorkDetails work={work}/>}
       </div>
   </div>;
 }

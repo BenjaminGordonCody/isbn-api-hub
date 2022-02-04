@@ -2,10 +2,10 @@ import { useState } from "react";
 import "./App.css";
 import EditionDetails from "./components/EditionDetails";
 import WorkDetails from "./components/WorkDetails";
-import bookObjFromISBN from "./components/BookObj";
+import bookArrFromISBNArr from "./components/BookObj";
 
 function App() {
-  const [bookObjLoaded, setBookObjLoaded] = useState(false);
+  const [arrLoaded, setArrLoaded] = useState(false);
   let [books, setBooks] = useState([]);
   const [input, setInput] = useState("");
 
@@ -15,16 +15,12 @@ function App() {
 
   const handleSubmit = async (event) => {
     // THIS IS NEXT TO CHANGE, GIVE SETBOOKS AS AN ARGUMENT
-    let bookArr = input.split(" ");
+    let ISBNArr = input.split(" ");
     setInput("");
-    bookArr.forEach((ISBN, index) => {
-      bookArr[index] = bookObjFromISBN(ISBN);
-    });
-    console.log(bookArr);
-    setBookObjLoaded(true);
+    bookArrFromISBNArr(ISBNArr, setBooks, setArrLoaded);
     event.preventDefault();
   };
-  if (!bookObjLoaded) {
+  if (!arrLoaded) {
     return (
       <div className="App">
         <form onSubmit={handleSubmit}>
@@ -38,7 +34,7 @@ function App() {
       <div className="App">
         {books.forEach((book) => {
           console.log(book);
-          return <bookObjContainer ISBN={book} />;
+          return <div>books</div>;
         })}
       </div>
     );

@@ -19,7 +19,7 @@ const handleFetchWork = async (bookObj) => {
   bookObj.worksInfo = data;
 };
 
-const bookObjFromISBN = async ({ ISBN }) => {
+const bookObjFromISBN = async (ISBN) => {
   let bookObj = new BookObj(ISBN);
   await getEditionDetails();
   await getWorksDetails();
@@ -57,4 +57,15 @@ const bookObjFromISBN = async ({ ISBN }) => {
   }
 };
 
-export default bookObjFromISBN;
+const bookArrFromISBNArr = async (arr, setBooks, setArrLoaded) => {
+  let tempArr = arr;
+  console.log(tempArr);
+  tempArr.forEach(async (ISBN, index) => {
+    const bookObj = await bookObjFromISBN(ISBN);
+    arr[index] = bookObj;
+  });
+  setBooks(tempArr);
+  setArrLoaded(true);
+};
+
+export default bookArrFromISBNArr;

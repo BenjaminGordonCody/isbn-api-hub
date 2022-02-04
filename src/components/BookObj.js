@@ -1,12 +1,15 @@
-import react from "react";
+class BookObj {
+  constructor(ISBN) {
+    this.ISBN = ISBN;
+  }
+}
+
 const handleFetchISBN = async (bookObj) => {
   const response = await fetch(
     `https://openlibrary.org/isbn/${bookObj.ISBN}.json`
   );
   const data = await response.json();
   bookObj.edition = data;
-  // console.log(bookObj);
-  //   handleFetchWork(data.works[0].key);
 };
 
 const handleFetchWork = async (bookObj) => {
@@ -16,31 +19,24 @@ const handleFetchWork = async (bookObj) => {
   bookObj.worksInfo = data;
 };
 
-class BookObj {
-  constructor(ISBN) {
-    this.ISBN = ISBN;
-  }
-}
-
-const BookObjContainer = async ({ ISBN }) => {
+const bookObjFromISBN = async ({ ISBN }) => {
   let bookObj = new BookObj(ISBN);
   await getEditionDetails();
-
-  //get works details
-  await handleFetchWork(bookObj);
-
-  // add work details
-  let desiredWorkFields = ["first_publish_date", "description", "subjects"];
-  desiredWorkFields.forEach((element) => {
-    if (bookObj.worksInfo[element]) {
-      bookObj[element] = bookObj.worksInfo[element];
-    }
-  });
-  delete bookObj.worksInfo;
-  delete bookObj.works;
+  await getWorksDetails();
   console.log(bookObj);
+  return bookObj;
 
-  return <div>filler</div>;
+  async function getWorksDetails() {
+    await handleFetchWork(bookObj);
+    let desiredWorkFields = ["first_publish_date", "description", "subjects"];
+    desiredWorkFields.forEach((element) => {
+      if (bookObj.worksInfo[element]) {
+        bookObj[element] = bookObj.worksInfo[element];
+      }
+    });
+    delete bookObj.worksInfo;
+    delete bookObj.works;
+  }
 
   async function getEditionDetails() {
     await handleFetchISBN(bookObj);
@@ -61,4 +57,4 @@ const BookObjContainer = async ({ ISBN }) => {
   }
 };
 
-export default BookObjContainer;
+export default bookObjFromISBN;

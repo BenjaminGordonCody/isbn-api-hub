@@ -1,6 +1,6 @@
 import { useState } from "react";
 import "./App.css";
-import bookArrFromISBNArr from "./funcs/BookObj";
+import bookArrFromISBNArr from "./funcs/ISBNConversionFuncs";
 
 function App() {
   //states ------------------------------------------------------

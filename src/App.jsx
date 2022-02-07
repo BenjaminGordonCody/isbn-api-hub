@@ -1,6 +1,7 @@
 import { useState } from "react";
 import "./App.css";
 import bookArrFromISBNArr from "./funcs/ISBNConversionFuncs";
+import LibraryCard from "./components/LibraryCard.jsx";
 
 function App() {
   //states ------------------------------------------------------
@@ -15,7 +16,9 @@ function App() {
 
   const handleSubmit = async (event) => {
     let ISBNArr = input.split(" ");
+    console.log(input, ISBNArr, books);
     setInput("");
+    console.log("handleSubmit");
     bookArrFromISBNArr(ISBNArr, setBooks, setArrLoaded);
     event.preventDefault();
   };
@@ -31,11 +34,13 @@ function App() {
     );
   } else {
     //what to show after the book array has been loaded
+    console.log(books);
     return (
       <div className="App">
-        {books.forEach((book) => {
-          console.log(book);
-          return <div>books</div>;
+        <div>test text</div>
+        {books.map((book, index) => {
+          console.log(books[index], books);
+          return <LibraryCard book={book} />;
         })}
       </div>
     );

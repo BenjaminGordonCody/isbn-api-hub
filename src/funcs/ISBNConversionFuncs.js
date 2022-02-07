@@ -1,10 +1,12 @@
 class BookObj {
   constructor(ISBN) {
+    console.log("book obj constructor");
     this.ISBN = ISBN;
   }
 }
 
 const handleFetchISBN = async (bookObj) => {
+  console.log("handle fetch ISBN");
   const response = await fetch(
     `https://openlibrary.org/isbn/${bookObj.ISBN}.json`
   );
@@ -13,6 +15,7 @@ const handleFetchISBN = async (bookObj) => {
 };
 
 const handleFetchWork = async (bookObj) => {
+  console.log("handle fetch work");
   let key = bookObj.works[0].key;
   const response = await fetch(`https://openlibrary.org${key}.json`);
   const data = await response.json();
@@ -20,13 +23,14 @@ const handleFetchWork = async (bookObj) => {
 };
 
 const bookObjFromISBN = async (ISBN) => {
+  console.log("book Obj from ISBN");
   let bookObj = new BookObj(ISBN);
   await getEditionDetails();
   await getWorksDetails();
-  console.log(bookObj);
   return bookObj;
 
   async function getWorksDetails() {
+    console.log("getWorksDetails");
     await handleFetchWork(bookObj);
     let desiredWorkFields = ["first_publish_date", "description", "subjects"];
     desiredWorkFields.forEach((element) => {
@@ -39,6 +43,7 @@ const bookObjFromISBN = async (ISBN) => {
   }
 
   async function getEditionDetails() {
+    console.log("get edition details");
     await handleFetchISBN(bookObj);
     const desiredEditionFields = [
       "title",
@@ -59,13 +64,17 @@ const bookObjFromISBN = async (ISBN) => {
 
 const bookArrFromISBNArr = async (arr, setBooks, setArrLoaded) => {
   let tempArr = arr;
+  console.log(arr);
   console.log(tempArr);
   tempArr.forEach(async (ISBN, index) => {
     const bookObj = await bookObjFromISBN(ISBN);
-    arr[index] = bookObj;
+    tempArr[index] = bookObj;
   });
+  console.log(tempArr);
   setBooks(tempArr);
+  console.log("Book state set");
   setArrLoaded(true);
+  console.log("Loaded state set");
 };
 
 export default bookArrFromISBNArr;

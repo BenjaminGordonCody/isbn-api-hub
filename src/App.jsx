@@ -16,9 +16,8 @@ function App() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    // console.log("handleSubmit");
     let ISBNArr = input.split(" ");
-    // console.log(input, ISBNArr, books);
+    console.log(input, ISBNArr, books);
     setInput("");
     await bookArrFromISBNArr(ISBNArr, setBooks, setArrLoaded);
   };

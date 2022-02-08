@@ -7,7 +7,7 @@ function App() {
   //states ------------------------------------------------------
   const [arrLoaded, setArrLoaded] = useState(false);
   let [books, setBooks] = useState([]);
-  const [input, setInput] = useState("");
+  const [input, setInput] = useState("9780140055795");
 
   //inputs and submissions -----------------------------------------
   const handleInputChange = (event) => {
@@ -15,12 +15,12 @@ function App() {
   };
 
   const handleSubmit = async (event) => {
-    let ISBNArr = input.split(" ");
-    console.log(input, ISBNArr, books);
-    setInput("");
-    console.log("handleSubmit");
-    bookArrFromISBNArr(ISBNArr, setBooks, setArrLoaded);
     event.preventDefault();
+    // console.log("handleSubmit");
+    let ISBNArr = input.split(" ");
+    // console.log(input, ISBNArr, books);
+    setInput("");
+    await bookArrFromISBNArr(ISBNArr, setBooks, setArrLoaded);
   };
   // what to show before the book array has been loaded
   if (!arrLoaded) {
@@ -34,12 +34,12 @@ function App() {
     );
   } else {
     //what to show after the book array has been loaded
-    console.log(books);
+    // console.log(books);
     return (
       <div className="App">
         <div>test text</div>
         {books.map((book, index) => {
-          console.log(books[index], books);
+          console.log("this is the output: " + book.title);
           return <LibraryCard book={book} />;
         })}
       </div>

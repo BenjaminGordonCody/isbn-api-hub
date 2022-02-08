@@ -5,8 +5,7 @@ import LibraryCard from "./components/LibraryCard.jsx";
 
 function App() {
   //states ------------------------------------------------------
-  const [arrLoaded, setArrLoaded] = useState(false);
-  let [books, setBooks] = useState([]);
+  let [books, setBooks] = useState(false);
   const [input, setInput] = useState("9780140055795");
 
   //inputs and submissions -----------------------------------------
@@ -20,12 +19,12 @@ function App() {
     console.log("input= ", input, "ISBNArr= ", ISBNArr, "books= ", books);
     setInput("");
     const booksArr = await bookArrFromISBNArr(ISBNArr);
+    console.log(booksArr[0]);
     setBooks(booksArr);
-    setArrLoaded(true);
   };
 
   // what to show before the book array has been loaded
-  if (!arrLoaded) {
+  if (!books[0]) {
     return (
       <div className="App">
         <form onSubmit={handleSubmit}>
@@ -36,8 +35,7 @@ function App() {
     );
   } else {
     //what to show after the book array has been loaded
-    // console.log(books);
-    console.log(books);
+    console.log(books[0]);
     return (
       <div className="App">
         <div>test text</div>

@@ -17,10 +17,13 @@ function App() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     let ISBNArr = input.split(" ");
-    console.log(input, ISBNArr, books);
+    console.log("input= ", input, "ISBNArr= ", ISBNArr, "books= ", books);
     setInput("");
-    await bookArrFromISBNArr(ISBNArr, setBooks, setArrLoaded);
+    const booksArr = await bookArrFromISBNArr(ISBNArr);
+    setBooks(booksArr);
+    setArrLoaded(true);
   };
+
   // what to show before the book array has been loaded
   if (!arrLoaded) {
     return (
@@ -34,11 +37,11 @@ function App() {
   } else {
     //what to show after the book array has been loaded
     // console.log(books);
+    console.log(books);
     return (
       <div className="App">
         <div>test text</div>
         {books.map((book, index) => {
-          console.log("this is the output: " + book.title);
           return <LibraryCard book={book} />;
         })}
       </div>

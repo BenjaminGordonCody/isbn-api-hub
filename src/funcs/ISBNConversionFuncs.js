@@ -1,31 +1,15 @@
-const bookArrFromISBNArr = async (arr, setBooks, setArrLoaded) => {
+const bookArrFromISBNArr = async (arr, setBooks) => {
+  let tempArr = [];
+
+  //fetch ISBN responses for each, put in tepArr
   arr.forEach(async (ISBN, index) => {
-    const bookObj = blankBookObj();
-    bookObj.ISBN = ISBN;
-    const APIResponses = [];
-    APIResponses[0] = await fetchEdition(ISBN);
-    const worksKey = APIResponses[0].works[0].key;
-    APIResponses[1] = await fetchWorks(worksKey);
+    const bookObj = { ISBN: ISBN };
+    bookObj.edition = await fetchEdition(ISBN);
+    const worksKey = bookObj.edition.works[0].key; //the API puts it here
+    bookObj.work = await fetchWorks(worksKey);
+    tempArr[index] = bookObj;
   });
-};
-
-const blankBookObj = () => {
-  const bookObj = {};
-  const desiredFields = [
-    "title",
-    "authors",
-    "publish_date",
-    "publishers",
-    "works",
-    "first_publish_date",
-    "description",
-    "subjects",
-  ];
-
-  desiredFields.forEach((field) => {
-    bookObj[field] = null;
-  });
-  return bookObj;
+  return tempArr;
 };
 
 const fetchEdition = async (ISBN) => {

@@ -1,7 +1,6 @@
 const LibraryCard = ({ book }) => {
-  console.log(book);
+  console.log(book.ISBN);
   const fields = [
-    "ISBN",
     "title",
     "authors",
     "first_publish_date",
@@ -10,14 +9,20 @@ const LibraryCard = ({ book }) => {
     "description",
     "subjects",
   ];
-  let returnObject = {};
 
-  fields.map((field) => {
-    returnObject[field] = book[field] ? book[field] : "unknown";
+  let returnObject = { ISBN: book.ISBN };
+
+  fields.forEach((field) => {
+    if (book.edition[field]) {
+      returnObject[field] = book.edition[field];
+    } else if (book.work[field]) {
+      returnObject[field] = book.work[field];
+    } else {
+      returnObject[field] = null;
+    }
   });
-  console.log(book);
   console.log(returnObject);
-  return <div className="LibraryCard"></div>;
+  return <div className="LibraryCard">{returnObject["ISBN"]}</div>;
 };
 
 export default LibraryCard;

@@ -1,12 +1,13 @@
 import { useState } from "react";
 import "./App.css";
-import bookArrFromISBNArr from "./funcs/ISBNConversionFuncs";
 import LibraryCard from "./components/LibraryCard.jsx";
 
 function App() {
   //states ------------------------------------------------------
-  let [books, setBooks] = useState(false);
-  const [input, setInput] = useState("9780140055795");
+  const [ISBNs, setISBNs] = useState([]);
+  const [input, setInput] = useState(
+    "9780140055795 9780192741783 9780025045408"
+  );
 
   //inputs and submissions -----------------------------------------
   const handleInputChange = (event) => {
@@ -15,16 +16,13 @@ function App() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    let ISBNArr = input.split(" ");
-    console.log("input= ", input, "ISBNArr= ", ISBNArr, "books= ", books);
+    const ISBNArr = input.split(" ");
     setInput("");
-    const booksArr = await bookArrFromISBNArr(ISBNArr);
-    console.log(booksArr[0]);
-    setBooks(booksArr);
+    setISBNs(ISBNArr);
   };
 
   // what to show before the book array has been loaded
-  if (!books[0]) {
+  if (!ISBNs[0]) {
     return (
       <div className="App">
         <form onSubmit={handleSubmit}>
@@ -35,12 +33,11 @@ function App() {
     );
   } else {
     //what to show after the book array has been loaded
-    console.log(books[0]);
     return (
       <div className="App">
         <div>test text</div>
-        {books.map((book, index) => {
-          return <LibraryCard book={book} />;
+        {ISBNs.map((ISBN) => {
+          return <LibraryCard ISBN={ISBN} />;
         })}
       </div>
     );

@@ -1,49 +1,54 @@
 import { useState } from "react";
 import { fetchEdition, fetchWorks } from "../funcs/ISBNConversionFuncs";
+import LibraryCardDetail from "./LibraryCardDetail";
 
 const LibraryCard = ({ ISBN }) => {
+  //states
   const [edition, setEdition] = useState(false);
   const [work, setWork] = useState(false);
+  const [loaded, setLoaded] = useState(false);
 
   try {
-    //states
-
     //API call
-
     if (!edition) {
       fetchEdition(ISBN, setEdition);
     } else if (edition.works && !work) {
-      const worksKey = edition.works[0].key;
+      const worksKey = edition.works[0].key; //assumes only one work is relevant
       fetchWorks(worksKey, setWork);
+    } else if (work && !loaded) {
+      setLoaded(true);
     }
 
-    console.log(work, edition);
-    // editionPromise.then(setEdition(editionPromise));
+    //return statement whilst waiting on API
+    if (!loaded) {
+      return (
+        <div className={"libraryCard waiting " + ISBN}>
+          Waiting on ISBN:{ISBN} to load
+        </div>
+      );
+    }
 
-    // console.log(book.ISBN);
-    // const fields = [
-    //   "title",
-    //   "authors",
-    //   "first_publish_date",
-    //   "publish_date",
-    //   "publishers",
-    //   "description",
-    //   "subjects",
-    // ];
+    //where in the returned objects is the information kept?
+    const whereFind = {
+      title: edition,
+      authors: edition,
+      first_publish_date: work,
+      publish_date: edition,
+      publishers: edition,
+      description: work,
+      subjects: work,
+    };
 
-    // let returnObject = { ISBN: book.ISBN };
+    const fields = Object.keys(whereFind);
 
-    // fields.forEach((field) => {
-    //   if (book.edition[field]) {
-    //     returnObject[field] = book.edition[field];
-    //   } else if (book.work[field]) {
-    //     returnObject[field] = book.work[field];
-    //   } else {
-    //     returnObject[field] = null;
-    //   }
-    // });
-    // console.log(returnObject);
-    return <div className="LibraryCard">hello</div>;
+    return (
+      <div className={"libraryCard fulfilled " + ISBN}>
+        {fields.map((field) => {
+          const refObj = whereFind[field];
+          return <LibraryCardDetail props={refObj[field]} />;
+        })}
+      </div>
+    );
   } catch (error) {
     console.log(error);
   }

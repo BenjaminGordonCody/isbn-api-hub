@@ -36,3 +36,13 @@
     transform: rotate(360deg);
   }
 }
+
+.libraryCard {
+  display: flex;
+  flex-direction: row;
+}
+
+.cardDetail {
+  flex: 1;
+  width: 50px;
+}

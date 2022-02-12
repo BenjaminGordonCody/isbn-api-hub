@@ -31,7 +31,6 @@ const LibraryCard = ({ ISBN }) => {
     //where in the returned objects is the information kept?
     const whereFind = {
       title: edition,
-      authors: edition,
       first_publish_date: work,
       publish_date: edition,
       publishers: edition,
@@ -45,6 +44,7 @@ const LibraryCard = ({ ISBN }) => {
       <div className={"libraryCard fulfilled " + ISBN}>
         {fields.map((field) => {
           const refObj = whereFind[field];
+          console.log(refObj[field]);
           return <LibraryCardDetail props={refObj[field]} />;
         })}
       </div>

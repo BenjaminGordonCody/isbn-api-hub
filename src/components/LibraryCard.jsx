@@ -51,7 +51,6 @@ const LibraryCard = ({ ISBN }) => {
         <div className="shortFields">
           {shortFields.map((field) => {
             const refObj = whereFind[field];
-            console.log(refObj[field]);
             return (
               <LibraryCardDetail content={refObj[field]} className={field} />
             );

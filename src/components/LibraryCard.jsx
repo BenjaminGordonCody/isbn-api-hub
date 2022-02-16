@@ -38,11 +38,24 @@ const LibraryCard = ({ ISBN }) => {
       subjects: work,
     };
 
-    const fields = Object.keys(whereFind);
+    const shortFields = [
+      "title",
+      "first_publish_date",
+      "publish_date",
+      "publishers",
+    ];
+    const longFields = ["description", "subjects"];
 
     return (
       <div className={"libraryCard fulfilled " + ISBN}>
-        {fields.map((field) => {
+        <div className="shortFields">
+          {shortFields.map((field) => {
+            const refObj = whereFind[field];
+            console.log(refObj[field]);
+            return <LibraryCardDetail props={refObj[field]} />;
+          })}
+        </div>
+        {longFields.map((field) => {
           const refObj = whereFind[field];
           console.log(refObj[field]);
           return <LibraryCardDetail props={refObj[field]} />;

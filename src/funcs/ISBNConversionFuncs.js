@@ -1,13 +1,21 @@
 const fetchEdition = async (ISBN, setEdition) => {
-  const response = await fetch(`https://openlibrary.org/isbn/${ISBN}.json`);
-  const data = await response.json();
-  setEdition(data);
+  try {
+    const response = await fetch(`https://openlibrary.org/isbn/${ISBN}.json`);
+    const data = await response.json();
+    setEdition(data);
+  } catch (err) {
+    console.log(err);
+  }
 };
 
 const fetchWorks = async (worksKey, setWork) => {
-  const response = await fetch(`https://openlibrary.org${worksKey}.json`);
-  const data = await response.json();
-  setWork(data);
+  try {
+    const response = await fetch(`https://openlibrary.org${worksKey}.json`);
+    const data = await response.json();
+    setWork(data);
+  } catch (err) {
+    console.log(err);
+  }
 };
 
 export { fetchEdition, fetchWorks };

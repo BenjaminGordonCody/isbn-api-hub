@@ -52,14 +52,20 @@ const LibraryCard = ({ ISBN }) => {
           {shortFields.map((field) => {
             const refObj = whereFind[field];
             console.log(refObj[field]);
-            return <LibraryCardDetail props={refObj[field]} />;
+            return (
+              <LibraryCardDetail content={refObj[field]} className={field} />
+            );
           })}
         </div>
-        {longFields.map((field) => {
-          const refObj = whereFind[field];
-          console.log(refObj[field]);
-          return <LibraryCardDetail props={refObj[field]} />;
-        })}
+        <div className="longFields">
+          {longFields.map((field) => {
+            const refObj = whereFind[field];
+            console.log(refObj[field]);
+            return (
+              <LibraryCardDetail content={refObj[field]} className={field} />
+            );
+          })}
+        </div>
       </div>
     );
   } catch (error) {

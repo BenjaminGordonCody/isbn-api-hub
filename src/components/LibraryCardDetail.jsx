@@ -1,16 +1,16 @@
-const LibraryCardDetail = ({ props }) => {
+const LibraryCardDetail = ({ content, className }) => {
   try {
     let string;
-    if (props == undefined) {
+    if (content == undefined) {
       string = "not here";
-    } else if (Array.isArray(props)) {
-      string = props.toString();
-    } else if (typeof props === "string") {
-      string = props;
+    } else if (Array.isArray(content)) {
+      string = content.join(", ");
+    } else if (typeof content === "string") {
+      string = content;
     } else {
       string = "mysterious input";
     }
-    return <div className="cardDetail">{string}</div>;
+    return <div className={"cardDetail " + className}>{string}</div>;
   } catch (error) {
     console.log(error);
     return <div>error</div>;

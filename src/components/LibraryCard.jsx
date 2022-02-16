@@ -60,7 +60,6 @@ const LibraryCard = ({ ISBN }) => {
         <div className="longFields">
           {longFields.map((field) => {
             const refObj = whereFind[field];
-            console.log(refObj[field]);
             return (
               <LibraryCardDetail content={refObj[field]} className={field} />
             );
@@ -69,7 +68,7 @@ const LibraryCard = ({ ISBN }) => {
       </div>
     );
   } catch (error) {
-    console.log(error);
+    <div className="libraryCard failed">{ISBN} did not load</div>;
   }
 };
 

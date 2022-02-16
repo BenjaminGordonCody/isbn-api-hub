@@ -1,5 +1,11 @@
 .App {
   text-align: center;
+  background-image: linear-gradient(
+    to bottom right,
+    rgb(153, 241, 160),
+    rgb(153, 213, 241)
+  );
+  min-height: 100vh;
 }
 
 .App-logo {
@@ -36,10 +42,18 @@
     transform: rotate(360deg);
   }
 }
+.body {
+  background-color: black;
+}
 
 .libraryCard {
   display: flex;
   flex-direction: row;
+  border: 1px solid black;
+  margin: 5px;
+  padding: 5px;
+  border-radius: 15px;
+  background-color: rgba(255, 255, 255, 0.5);
 }
 
 .cardDetail {
@@ -50,9 +64,30 @@
 .longFields {
   flex: 1;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
 }
 
+.shortFields {
+  width: 20vw;
+  text-align: left;
+  border-radius: 15px;
+  border: 1px solid lightblue;
+  padding: 10px;
+}
 .subjects {
-  font-size: x-small;
+  font-size: xx-small;
+  text-align: right;
+  flex: 1.5;
+}
+
+.subjects:hover {
+  font-size: medium;
+}
+
+.title {
+  font-size: x-large;
+}
+
+.description {
+  font-size: large;
 }

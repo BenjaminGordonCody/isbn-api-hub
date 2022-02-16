@@ -2,13 +2,13 @@ const LibraryCardDetail = ({ content, className }) => {
   try {
     let string;
     if (content == undefined) {
-      string = "not here";
+      string = null;
     } else if (Array.isArray(content)) {
       string = content.join(", ");
     } else if (typeof content === "string") {
       string = content;
     } else {
-      string = "mysterious input";
+      string = null;
     }
     return <div className={"cardDetail " + className}>{string}</div>;
   } catch (error) {

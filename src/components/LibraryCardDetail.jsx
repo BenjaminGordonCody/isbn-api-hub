@@ -7,6 +7,8 @@ const LibraryCardDetail = ({ content, className }) => {
       string = content.join(", ");
     } else if (typeof content === "string") {
       string = content;
+    } else if (content.value) {
+      string = content.value;
     } else {
       string = null;
     }

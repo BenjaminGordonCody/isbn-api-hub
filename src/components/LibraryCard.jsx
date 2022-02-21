@@ -71,7 +71,11 @@ const LibraryCard = ({ ISBN, exportArr, setExportArr }) => {
           {shortFields.map((field) => {
             const refObj = whereFind[field];
             return (
-              <LibraryCardDetail content={refObj[field]} className={field} />
+              <LibraryCardDetail
+                key={field}
+                content={refObj[field]}
+                className={field}
+              />
             );
           })}
         </div>
@@ -79,7 +83,11 @@ const LibraryCard = ({ ISBN, exportArr, setExportArr }) => {
           {longFields.map((field) => {
             const refObj = whereFind[field];
             return (
-              <LibraryCardDetail content={refObj[field]} className={field} />
+              <LibraryCardDetail
+                key={field}
+                content={refObj[field]}
+                className={field}
+              />
             );
           })}
         </div>

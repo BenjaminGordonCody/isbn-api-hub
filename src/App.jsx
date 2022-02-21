@@ -37,10 +37,11 @@ function App() {
     return (
       <div className="App">
         <div>test text</div>
-        {ISBNs.map((ISBN) => {
+        {ISBNs.map((ISBN, index) => {
           return (
             <LibraryCard
               ISBN={ISBN}
+              key={"card" + index}
               exportArr={exportArr}
               setExportArr={setExportArr}
             />

@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./App.css";
 import LibraryCard from "./components/LibraryCard.jsx";
+import { objArrToCSV } from "./funcs/exportFuncs";
 
 function App() {
   //states ------------------------------------------------------
@@ -9,6 +10,12 @@ function App() {
     "9780140055795 9781857333800 9781984806154 9780804172042 9780345388964 9781400076215 9780593087480 9780192741783 9780025045408 9781782599593 9780007466023"
   );
   const [exportArr, setExportArr] = useState([]);
+
+  //useEffects
+  useEffect(() => {
+    objArrToCSV(exportArr);
+    console.log("useEffect");
+  }, [exportArr]);
 
   //inputs and submissions -----------------------------------------
   const handleInputChange = (event) => {

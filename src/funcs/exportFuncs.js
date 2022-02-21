@@ -1,7 +1,11 @@
 export const makeSummaryObject = (edition, work, author) => {
-  return {
-    title: edition.title,
-    author: author.name,
-    tags: work.subjects.join(", "),
-  };
+  try {
+    return {
+      title: edition.title,
+      author: author.name,
+      tags: work.subjects ? work.subjects.join(", ") : null,
+    };
+  } catch (e) {
+    return {};
+  }
 };

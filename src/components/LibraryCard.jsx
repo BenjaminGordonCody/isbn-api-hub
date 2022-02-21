@@ -13,11 +13,13 @@ const LibraryCard = ({ ISBN, exportArr, setExportArr }) => {
   const [work, setWork] = useState(false);
   const [auth, setAuth] = useState(false);
   const [loaded, setLoaded] = useState(false);
-  const [exportObj, setExportObj] = useState({});
+  const [exportObj, setExportObj] = useState(false);
 
   useEffect(() => {
-    setExportArr([...exportArr, exportObj]);
-  }, [exportObj]);
+    if (loaded) {
+      setExportArr([...exportArr, exportObj]);
+    }
+  }, [loaded]);
 
   try {
     //API call

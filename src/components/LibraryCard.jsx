@@ -1,21 +1,35 @@
-import { useState } from "react";
-import { fetchEdition, fetchWorks } from "../funcs/ISBNConversionFuncs";
+import { useEffect, useState } from "react";
+import { makeSummaryObject } from "../funcs/exportFuncs";
+import {
+  fetchAuthor,
+  fetchEdition,
+  fetchWorks,
+} from "../funcs/ISBNConversionFuncs";
 import LibraryCardDetail from "./LibraryCardDetail";
 
-const LibraryCard = ({ ISBN }) => {
+const LibraryCard = ({ ISBN, exportArr, setExportArr }) => {
   //states
   const [edition, setEdition] = useState(false);
   const [work, setWork] = useState(false);
+  const [auth, setAuth] = useState(false);
   const [loaded, setLoaded] = useState(false);
+  const [exportObj, setExportObj] = useState({});
+
+  useEffect(() => {
+    setExportArr([...exportArr, exportObj]);
+  }, [exportObj]);
 
   try {
     //API call
     if (!edition) {
       fetchEdition(ISBN, setEdition);
     } else if (edition.works && !work) {
-      const worksKey = edition.works[0].key; //assumes only one work is relevant
-      fetchWorks(worksKey, setWork);
-    } else if (work && !loaded) {
+      //next two lines assume only one work and one author is relevant
+      fetchWorks(edition.works[0].key, setWork);
+    } else if (edition.authors && !auth) {
+      fetchAuthor(edition.authors[0].key, setAuth);
+    } else if (work && auth && !loaded) {
+      setExportObj(makeSummaryObject(edition, work, auth));
       setLoaded(true);
     }
 
@@ -31,6 +45,7 @@ const LibraryCard = ({ ISBN }) => {
     //where in the returned objects is the information kept?
     const whereFind = {
       title: edition,
+      name: auth,
       first_publish_date: work,
       publish_date: edition,
       publishers: edition,
@@ -38,8 +53,10 @@ const LibraryCard = ({ ISBN }) => {
       subjects: work,
     };
 
+    // fields split into short/long to determine placement by CSS
     const shortFields = [
       "title",
+      "name",
       "first_publish_date",
       "publish_date",
       "publishers",
@@ -67,7 +84,8 @@ const LibraryCard = ({ ISBN }) => {
       </div>
     );
   } catch (error) {
-    <div className="libraryCard failed">{ISBN} did not load</div>;
+    console.log(error.message);
+    return <div className="libraryCard failed">{ISBN} did not load</div>;
   }
 };
 

@@ -18,4 +18,14 @@ const fetchWorks = async (worksKey, setWork) => {
   }
 };
 
-export { fetchEdition, fetchWorks };
+const fetchAuthor = async (authKey, setAuth) => {
+  try {
+    const response = await fetch(`https://openlibrary.org${authKey}.json`);
+    const data = await response.json();
+    setAuth(data);
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export { fetchEdition, fetchWorks, fetchAuthor };
